@@ -8,7 +8,7 @@ import com.example.myapplication.db.dao.DaoNotify
 import com.example.myapplication.db.model.ModelNotify
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [ModelNotify::class], version = 1)
+@Database(entities = [ModelNotify::class], version = 2)
 abstract class DbNotify : RoomDatabase() {
 
     abstract fun notifyDao():DaoNotify
@@ -20,7 +20,7 @@ abstract class DbNotify : RoomDatabase() {
         fun getDatabase(context: Context,scope: CoroutineScope): DbNotify {
 
             return if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(context,DbNotify::class.java,"db").build()
+                INSTANCE = Room.databaseBuilder(context,DbNotify::class.java,"dbF2").build()
                 INSTANCE as DbNotify
             }else{
                 INSTANCE as DbNotify

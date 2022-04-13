@@ -3,21 +3,21 @@ package com.example.myapplication
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.CalendarView
 import android.widget.DatePicker
 import android.widget.TimePicker
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.ViewModel.ViewModelNotify
 import com.example.myapplication.databinding.ActivityEditBinding
-import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.db.model.ModelNotify
-import com.example.myapplication.notification.*
+import com.example.myapplication.notification.NotifyHelper
+import com.example.myapplication.notification.channelID
+import com.example.myapplication.notification.rand
+import com.example.myapplication.notification.titleExtra
 import java.util.*
+
 
 class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener{
@@ -41,8 +41,8 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         setContentView(binding.root)
 
         initInsertBd()
-        initNotifyButton()
 
+        initNotifyButton()
         createdChanel()
 
     }
@@ -60,7 +60,7 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
     private fun scheduleNotify(){
         val intent = Intent(applicationContext, NotifyHelper::class.java)
-        val title = binding.txTime.text.toString()
+        val title = binding.editNotify.text.toString()
         intent.putExtra(titleExtra, title)
 
         val pendingIntent = PendingIntent.getBroadcast(
@@ -86,7 +86,10 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
         binding.addNotify.setOnClickListener{
             val titleEdit = binding.editNotify.text.toString()
-            viewModel.insert(ModelNotify(title = titleEdit))
+            viewModel.insert(ModelNotify(title = titleEdit,
+                timePerson = getDateTimePerson().toString()))
+
+            scheduleNotify()
             onBackPressed()
         }
 
@@ -105,15 +108,13 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     }
 
     //возращает время выбраное пользователем
-    private fun getDateTimePerson():Date {
-        val cal = Calendar.getInstance()
-        cal.set(saveYear, saveMonth, saveDay, saveHour, saveMinute)
-        return cal.time
+    private fun getDateTimePerson():String {
+        var saveMonth2 = saveMonth+1
+        return "$saveDay-$saveMonth2-$saveYear\n Час: $saveHour Минута: $saveMinute"
     }
 
     private fun getDateTime2() : Long{
         val cal = Calendar.getInstance()
-
         cal.set(saveYear, saveMonth, saveDay, saveHour, saveMinute)
         return cal.timeInMillis
     }
@@ -121,11 +122,7 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private fun initNotifyButton(){
         binding.addTime.setOnClickListener {
             getDateTimeNow()
-            //binding.txTime.text = minute.toString()
             DatePickerDialog(this,this, year,month, day).show()
-        }
-        binding.button.setOnClickListener {
-            scheduleNotify()
         }
 
     }

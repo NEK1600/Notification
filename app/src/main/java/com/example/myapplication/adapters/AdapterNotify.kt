@@ -19,6 +19,7 @@ class AdapterNotify : RecyclerView.Adapter<AdapterNotify.AdapterViewHolder>() {
 
     override fun onBindViewHolder(holder: AdapterViewHolder, position: Int) {
         holder.textView.text = listNotify[position].title
+        holder.textViewTimePerson.text = listNotify[position].timePerson
     }
 
     override fun getItemCount(): Int {
@@ -29,6 +30,7 @@ class AdapterNotify : RecyclerView.Adapter<AdapterNotify.AdapterViewHolder>() {
 
     class AdapterViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val textView: TextView = itemView.findViewById(R.id.tx)
+        val textViewTimePerson: TextView = itemView.findViewById(R.id.txTimePerson)
     }
 
 

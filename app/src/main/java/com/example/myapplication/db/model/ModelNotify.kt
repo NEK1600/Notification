@@ -10,5 +10,12 @@ class ModelNotify(
     var id:Int = 0,
 
     @ColumnInfo
-    var title: String=""
+    var title: String="" ,
+
+    @ColumnInfo
+    var timeMills: Long= 12345678910,
+
+    @ColumnInfo
+    var timePerson: String=""
+
 )
