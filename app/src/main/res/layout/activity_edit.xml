@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditActivity">
+    <EditText
+        android:id="@+id/editNotify"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="#EBEBEB"
+        android:gravity="top"
+        android:hint="Введите текст"
+        android:padding="10dp"
+        android:textSize="20sp" />
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000000"
+        android:layout_below="@+id/editNotify"
+        />
+    <Button
+        android:id="@+id/addTime"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@+id/view1"
+        android:backgroundTint="#EBEBEB"
+        android:text="добавьте время"
+        android:textColor="#535353"
+        android:textSize="18sp"
+        />
+    <TextView
+        android:id="@+id/txTime"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/addTime"
+        android:gravity="center"
+        android:background="#EBEBEB"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        />
+
+    <ImageButton
+        android:id="@+id/addNotify"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/add2" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="74dp"
+        android:layout_marginBottom="125dp"
+        android:text="Button" />
+
+</RelativeLayout>
