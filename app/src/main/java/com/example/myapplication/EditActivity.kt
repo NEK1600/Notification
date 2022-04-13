@@ -40,14 +40,10 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         binding = ActivityEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        init()
-        pickDate()
+        initInsertBd()
+        initNotifyButton()
 
         createdChanel()
-
-        binding.button.setOnClickListener { scheduleNotify()
-            binding.txTime.text = rand().toString()
-        }
 
     }
 
@@ -66,12 +62,14 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         val intent = Intent(applicationContext, NotifyHelper::class.java)
         val title = binding.txTime.text.toString()
         intent.putExtra(titleExtra, title)
+
         val pendingIntent = PendingIntent.getBroadcast(
             applicationContext,
             rand(),
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
+
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val time =  getDateTime2()
 
@@ -80,11 +78,10 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             time,
             pendingIntent
         )
-
     }
 
-
-    private fun init(){
+    // подключает бд и записывает в бд
+    private fun initInsertBd(){
         val viewModel = ViewModelProvider(this).get(ViewModelNotify::class.java)
 
         binding.addNotify.setOnClickListener{
@@ -95,16 +92,25 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
     }
 
-
-    private fun getDateTime() {
+    //возращает время на данный моменрт
+    private fun getDateTimeNow():Date {
         val cal = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)
         month = cal.get(Calendar.MONTH)
         year = cal.get(Calendar.YEAR)
         hour = cal.get(Calendar.HOUR)
         minute = cal.get(Calendar.MINUTE)
-
+        cal.set(year, month, day, hour, minute)
+        return cal.time
     }
+
+    //возращает время выбраное пользователем
+    private fun getDateTimePerson():Date {
+        val cal = Calendar.getInstance()
+        cal.set(saveYear, saveMonth, saveDay, saveHour, saveMinute)
+        return cal.time
+    }
+
     private fun getDateTime2() : Long{
         val cal = Calendar.getInstance()
 
@@ -112,28 +118,31 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         return cal.timeInMillis
     }
 
-    private fun pickDate(){
+    private fun initNotifyButton(){
         binding.addTime.setOnClickListener {
-            getDateTime()
+            getDateTimeNow()
             //binding.txTime.text = minute.toString()
             DatePickerDialog(this,this, year,month, day).show()
         }
-    }
+        binding.button.setOnClickListener {
+            scheduleNotify()
+        }
 
+    }
 
 
     override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
         saveDay=p3
         saveMonth = p2
         saveYear = p1
-        getDateTime()
+        getDateTimeNow()
         TimePickerDialog(this, this,hour,minute,true).show()
     }
 
     override fun onTimeSet(p0: TimePicker?, p1: Int, p2: Int) {
         saveHour = p1
         saveMinute = p2
-        getDateTime()
+        getDateTimeNow()
         binding.txTime.text = "$saveDay-$saveMonth-$saveYear\n Час: $saveHour Минута: $saveMinute"
 
     }
