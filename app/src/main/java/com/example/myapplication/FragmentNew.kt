@@ -20,10 +20,12 @@ import com.example.myapplication.db.model.ModelNotify
 
 class FragmentNew : Fragment() {
     lateinit var binding: FragmentNewBinding
-    lateinit var rcView: RecyclerView
+    lateinit var rcViewNew: RecyclerView
     lateinit var adapter: AdapterNotify
     lateinit var currentNotify: ModelNotify
-
+    var listL = mutableListOf<ModelNotify>()
+    var listL2 = mutableListOf<ModelNotify>()
+    lateinit var editActivityL: EditActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,21 +37,39 @@ class FragmentNew : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
     private fun init(){
-        rcView = binding.rvNew
+        rcViewNew = binding.rvNew
         adapter = AdapterNotify()
-        rcView.adapter = adapter
-        rcView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
+        editActivityL = EditActivity()
+        rcViewNew.adapter = adapter
+        rcViewNew.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
 
         val viewModel = ViewModelProvider(this).get(ViewModelNotify::class.java)
 
-        viewModel.getAllNotify().observe(viewLifecycleOwner, {listNotify->
-            adapter.update(listNotify)}
-        )
+        viewModel.getAllNotify().observe(viewLifecycleOwner) { listNotify ->
+            listL = listNotify.toMutableList()
+            var listD = viewModel.getAllNotify().value
+            for (i in listL) {
+                if (i.timeMills > editActivityL.getDateTime3()) {
+                    listL2.add(i)
+                }
+            }
+            Log.d("fsd", 3.toString())
+            adapter.update(listL2)
+        }
+
+
         val swapHelper = getSwapMg()
-        swapHelper.attachToRecyclerView(rcView)
+        swapHelper.attachToRecyclerView(rcViewNew)
 
     }
+
+
     private fun getSwapMg(): ItemTouchHelper{
         val viewModel = ViewModelProvider(this).get(ViewModelNotify::class.java)
 
@@ -68,7 +88,8 @@ class FragmentNew : Fragment() {
                 adapter.removeItem(viewHolder.adapterPosition)
 
 
-                var inter = viewModel.getAllNotify().value?.get(adapter.posit())!!
+                var inter = listL2.get(adapter.posit())
+                //var inter = viewModel.getAllNotify().value?.get(adapter.posit())!!
                 viewModel.deleteItem(inter)
 
             }

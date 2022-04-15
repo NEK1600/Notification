@@ -89,7 +89,7 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             viewModel.insert(ModelNotify(
                 title = titleEdit,
                 timePerson = getDateTimePerson().toString(),
-                //timeMills = getDateTime2()
+                timeMills = getDateTime2()
             ))
 
             scheduleNotify()
@@ -108,6 +108,7 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         hour = cal.get(Calendar.HOUR)
         minute = cal.get(Calendar.MINUTE)
         cal.set(year, month, day, hour, minute)
+
         return cal.time
     }
 
@@ -116,10 +117,15 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         var saveMonth2 = saveMonth+1
         return "$saveDay-$saveMonth2-$saveYear\n Час: $saveHour Минута: $saveMinute"
     }
-
-    private fun getDateTime2() : Long{
+    //время пользователя
+    fun getDateTime2() : Long{
         val cal = Calendar.getInstance()
         cal.set(saveYear, saveMonth, saveDay, saveHour, saveMinute)
+        return cal.timeInMillis
+    }
+    fun getDateTime3() : Long{
+        val cal = Calendar.getInstance()
+        //cal.set(year, month, day, hour, minute)
         return cal.timeInMillis
     }
 

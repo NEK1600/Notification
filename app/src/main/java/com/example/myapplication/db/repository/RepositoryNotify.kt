@@ -2,12 +2,13 @@ package com.example.myapplication.db.repository
 
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.db.dao.DaoNotify
 import com.example.myapplication.db.model.ModelNotify
 
 class RepositoryNotify(private val daoNotify: DaoNotify) {
 
-    val repositoryAllNotify :LiveData<List<ModelNotify>> = daoNotify.getAllNotify()
+    val repositoryAllNotify : LiveData<List<ModelNotify>> = daoNotify.getAllNotify()
 
     //val repositoryDeleteAllNotify :LiveData<List<ModelNotify>> = daoNotify.getDeleteNotifyById()
 

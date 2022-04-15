@@ -1,6 +1,5 @@
 package com.example.myapplication.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +16,9 @@ class AdapterNotify : RecyclerView.Adapter<AdapterNotify.AdapterViewHolder>() {
     var listNotify = emptyList<ModelNotify>()
     var posit = 0
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.notify_element,parent, false)
+
         return AdapterViewHolder(view)
     }
 
@@ -28,9 +26,6 @@ class AdapterNotify : RecyclerView.Adapter<AdapterNotify.AdapterViewHolder>() {
         holder.textView.text = listNotify[position].title
         holder.textViewTimePerson.text = listNotify[position].timePerson
 
-        /*holder.deleteButton.setOnClickListener{
-            viewModel.delete.listNotify.get(position)
-        }*/
         posit=position
 
     }
@@ -53,7 +48,9 @@ class AdapterNotify : RecyclerView.Adapter<AdapterNotify.AdapterViewHolder>() {
 
     fun update(list:List<ModelNotify>){
         listNotify=list
+
         notifyDataSetChanged()
+
     }
 
     fun removeItem(pos:Int){
