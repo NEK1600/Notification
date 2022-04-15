@@ -21,7 +21,7 @@ import java.util.*
 
 class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener{
-
+    var listNotify = emptyList<ModelNotify>()
     private lateinit var binding: ActivityEditBinding
     var day = 0
     var month = 0
@@ -86,12 +86,16 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
         binding.addNotify.setOnClickListener{
             val titleEdit = binding.editNotify.text.toString()
-            viewModel.insert(ModelNotify(title = titleEdit,
-                timePerson = getDateTimePerson().toString()))
+            viewModel.insert(ModelNotify(
+                title = titleEdit,
+                timePerson = getDateTimePerson().toString(),
+                //timeMills = getDateTime2()
+            ))
 
             scheduleNotify()
             onBackPressed()
         }
+        //реализовать кнопку удаления
 
     }
 

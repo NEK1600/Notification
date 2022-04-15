@@ -20,7 +20,7 @@ abstract class DbNotify : RoomDatabase() {
         fun getDatabase(context: Context,scope: CoroutineScope): DbNotify {
 
             return if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(context,DbNotify::class.java,"dbF2").build()
+                INSTANCE = Room.databaseBuilder(context,DbNotify::class.java,"db3").build()
                 INSTANCE as DbNotify
             }else{
                 INSTANCE as DbNotify
