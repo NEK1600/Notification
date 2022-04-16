@@ -83,7 +83,7 @@ class FragmentOld : Fragment() {
 
                 adapter.removeItem(viewHolder.adapterPosition)
 
-                var inter = listG.get(adapter.posit())
+                var inter = listG2.get(adapter.posit())
                 viewModel.deleteItem(inter)
 
             }
