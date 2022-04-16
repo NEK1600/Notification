@@ -46,20 +46,19 @@ class FragmentOld : Fragment() {
 
         val viewModel = ViewModelProvider(this).get(ViewModelNotify::class.java)
 
-        viewModel.getAllNotify().observe(viewLifecycleOwner, {listNotify->
-            listG=listNotify.toMutableList()
-
-            for(i in listG){
-                if (i.timeMills < editActivity.getDateTime3()){
-                    //Log.d("fsd", i.timeMills.toString())
-                    listG2.add(i)
+        viewModel.getAllNotify().observe(viewLifecycleOwner
+        ) { listNotify2 ->
+            listG = listNotify2.toMutableList()
+            listG2.clear()
+            for (i in listG) {
+                if (i.timeMills < editActivity.getDateTime3()) {
+                   listG2.add(i)
+                    //Log.d("fsd",  listNotify2.toMutableList().add(i).toString())
                 }
-                //Log.d("fsd", editActivity.getDateTime3().toString())
             }
 
-            adapter.update(listG2)}
-        )
-
+            adapter.update(listG2)
+        }
 
 
         val swapHelper = getSwapMg()

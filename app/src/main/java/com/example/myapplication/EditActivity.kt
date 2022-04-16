@@ -120,7 +120,7 @@ class EditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     //время пользователя
     fun getDateTime2() : Long{
         val cal = Calendar.getInstance()
-        cal.set(saveYear, saveMonth, saveDay, saveHour, saveMinute)
+       cal.set(saveYear, saveMonth, saveDay, saveHour, saveMinute)
         return cal.timeInMillis
     }
     fun getDateTime3() : Long{

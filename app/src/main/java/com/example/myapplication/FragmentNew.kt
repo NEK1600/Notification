@@ -53,14 +53,16 @@ class FragmentNew : Fragment() {
 
         viewModel.getAllNotify().observe(viewLifecycleOwner) { listNotify ->
             listL = listNotify.toMutableList()
-            var listD = viewModel.getAllNotify().value
+            listL2.clear()
             for (i in listL) {
                 if (i.timeMills > editActivityL.getDateTime3()) {
                     listL2.add(i)
+                    //Log.d("fsd",  listNotify2.toMutableList().add(i).toString())
                 }
             }
-            Log.d("fsd", 3.toString())
+
             adapter.update(listL2)
+
         }
 
 
